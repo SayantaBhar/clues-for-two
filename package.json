@@ -1,6 +1,11 @@
 {
   "name": "codenames.plus",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Joooop/codenames.plus.git"
+  },
+  "private": true,
   "description": "",
   "main": "app.js",
   "dependencies": {

@@ -3,6 +3,7 @@ services:
   codenames:
     build: . 
     ports:
-      - "2000:2000"
+      - "127.0.0.1:8051:8051"
     environment: 
       - REQUIRE_HTTPS=false
+      - PORT=8051
