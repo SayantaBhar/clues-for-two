@@ -231,7 +231,8 @@ function displayNotification(str) {
     let notification = new Notification('Clues For Two', {
         'body': str,
         'vibrate': [100, 100],
-        'renotify': true,
+        'tag': 'renotify',
+        'renotify': true
       })
   }
   if (!("Notification" in window)) {
