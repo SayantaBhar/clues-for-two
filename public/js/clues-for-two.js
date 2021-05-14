@@ -100,7 +100,7 @@ buttonRoleGuesser.disabled = true;
 buttonRoleSpymaster.disabled = false;
 buttonConsensusSingle.disabled = true;
 buttonConsensusConsensus.disabled = false;
-buttonNoficationsOn.disabled = "Notification" in window && Notification.permission == "granted" && localStorage.getItem('clues-for-two.notifications') != 'false'
+buttonNoficationsOn.disabled = window.Notification && Notification.permission == 'granted' && localStorage.getItem('clues-for-two.notifications') != 'false'
 buttonNoficationsOff.disabled = !buttonNoficationsOn.disabled
 
 // Autofill room and password from query fragment
@@ -221,15 +221,28 @@ buttonNoficationsOff.onclick = () => {
   localStorage.setItem('clues-for-two.notifications', 'false')
 }
 buttonNoficationsOn.onclick = () => {
-  if ("Notification" in window) {
+  if (isNewNotificationSupported()) {
     Notification.requestPermission().then(function (permission) {
-      if (permission === "granted") {
+      if (permission === 'granted') {
         buttonNoficationsOn.disabled = true
         buttonNoficationsOff.disabled = false
         localStorage.setItem('clues-for-two.notifications', 'true')
       }
     })
   }
+}
+function isNewNotificationSupported() {
+  if (!window.Notification || !Notification.requestPermission)
+    return false
+  if (Notification.permission === 'granted')
+    return true
+  try {
+    new Notification('');
+  } catch (e) {
+    if (e.name == 'TypeError')
+      return false
+  }
+  return true
 }
 function displayNotification(str) {
   if (localStorage.getItem('clues-for-two.notifications') == 'false') return
@@ -242,14 +255,14 @@ function displayNotification(str) {
         'renotify': true
       })
   }
-  if (!("Notification" in window)) {
-    // notifications unsupported
-  } else if (Notification.permission === "granted") {
+  if (window.Notification && Notification.permission === 'granted') {
+    // We would only have prompted the user for permission if new
+    // Notification was supported (see below), so assume it is supported.
     sendNotification()
-  } else if (Notification.permission !== "denied") {
+  } else if (Notification.permission !== 'denied' && isNewNotificationSupported()) {
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
-      if (permission === "granted") {
+      if (permission === 'granted') {
         sendNotification()
       }
     })
