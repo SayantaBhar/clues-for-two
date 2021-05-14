@@ -711,7 +711,7 @@ button {
   color: #DDDDDD;
 }
 
-#players #panel #randomize-teams{
+#players #panel #reset-scoreboard {
   position: relative;
   width: 96%;
   margin: 2%;
@@ -719,7 +719,22 @@ button {
   box-sizing: border-box;
   padding: 4px;
   font-size: 16px;
+  color: #F8FDFF;
+  background: #686c6d;
+}
 
+#players #panel #reset-scoreboard:hover {
+  background: #323032;
+}
+
+#players #panel #randomize-teams {
+  position: relative;
+  width: 96%;
+  margin: 2%;
+  border: 2px solid #686c6d;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 16px;
   color: #F8FDFF;
   background: #686c6d;
 }

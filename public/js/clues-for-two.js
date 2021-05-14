@@ -38,6 +38,7 @@ let overlay = document.getElementById('overlay')
 let logDiv = document.getElementById('log')
 let playerNameDiv = document.getElementById('player-name')
 // Buttons
+let resetScoreboard = document.getElementById('reset-scoreboard')
 let leaveRoom = document.getElementById('leave-room')
 let joinRed = document.getElementById('join-red')
 let joinBlue = document.getElementById('join-blue')
@@ -153,6 +154,12 @@ joinBlue.onclick = () => {
   socket.emit('joinTeam', {
     team:'blue'
   })
+}
+// User Resets Scoreboard to 0-0
+resetScoreboard.onclick = () => {
+  if(confirm("Are you sure you want to reset scoreboard to 0-0?")) {
+    socket.emit('resetScoreboard', {})
+  }
 }
 // User Randomizes Team
 randomizeTeams.onclick = () => {
