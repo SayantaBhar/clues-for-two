@@ -222,6 +222,9 @@ io.sockets.on('connection', function(socket){
     gameUpdate(player.room)               // Update the game for everyone in their room
   })
 
+  // Rest Scoreboard. Called when client reset scoreboard
+  socket.on('resetScoreboard', () => {resetScoreboard(socket)})
+
   // Randomize Team. Called when client randomizes the teams
   socket.on('randomizeTeams', () => {randomizeTeams(socket)})
 
@@ -481,6 +484,15 @@ function changeColor(socket, data){
     roomDetails.redLightColor = palette.light
   }
   gameUpdate(room)
+}
+
+function resetScoreboard(socket){
+  if (!PLAYER_LIST[socket.id]) return // Prevent Crash
+  let room = PLAYER_LIST[socket.id].room   // Get the room that the client called from
+  let roomDetails = ROOM_LIST[room]
+  roomDetails.overallScoreRed = 0
+  roomDetails.overallScoreBlue = 0
+  gameUpdate(room) // Update everyone in the room
 }
 
 // Randomize Teams function
